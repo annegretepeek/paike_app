@@ -40,6 +40,8 @@ for (city in names(app_env$by_city)) {
   }
 }
 stopifnot(app_env$clock_minutes("23:59") == 1439L,
+          app_env$clock_minutes("00:00") == 0L,
+          is.na(app_env$clock_minutes("11:00 PM")),
           is.na(app_env$clock_minutes("24:00")),
           is.na(app_env$clock_minutes("")))
 

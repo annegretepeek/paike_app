@@ -33,15 +33,10 @@ daylight_minutes <- function(rise, set, wake, bed) {
 }
 
 time_input <- function(id, label, value) {
-  tags$div(
-    class = "form-group shiny-input-container",
-    tags$label(`for` = id, class = "control-label", label),
-    tags$input(
-      id = id, type = "time", class = "form-control", value = value,
-      step = "60", required = NA,
-      onchange = "Shiny.setInputValue(this.id, this.value, {priority: 'event'});"
-    )
-  )
+  # Native type="time" may display AM/PM according to the browser locale.
+  # Shiny's text binding preserves the explicit 24-hour HH:MM display.
+  textInput(id, paste0(label, " (HH:MM, 24 h)"), value = value,
+            placeholder = "HH:MM")
 }
 
 draw_daylight <- function(d, scenario, wake, bed) {
@@ -98,7 +93,8 @@ server <- function(input, output, session) {
   schedule <- reactive({
     wake <- clock_minutes(if (is.null(input$aratus)) "07:00" else input$aratus)
     bed <- clock_minutes(if (is.null(input$uni)) "23:00" else input$uni)
-    validate(need(!is.na(wake) && !is.na(bed), "Sisesta mõlemad kellaajad."))
+    validate(need(!is.na(wake) && !is.na(bed),
+                  "Sisesta kellaajad 24 tunni kujul HH:MM (00:00–23:59)."))
     list(wake = wake, bed = bed)
   })
   city_data <- reactive({

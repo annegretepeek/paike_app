@@ -1,10 +1,12 @@
 # Browser-ready daylight calculator
 
-This version needs only **shiny**. It uses base R plots and native browser time
+This version needs only **shiny**. It uses base R plots and 24-hour HH:MM text
 inputs instead of ggplot2 and shinyTime. Numeric minutes replace POSIXct clock
 times, so results do not depend on today's date or the visitor's timezone.
 City data is grouped once at startup; all three totals use one vectorized
 calculation, and only the selected chart is rendered.
+Time fields always display values such as `07:00` and `23:00`, regardless of
+the browser's locale. Enter two-digit hours and minutes from `00:00` to `23:59`.
 
 The UI remains in Estonian. Charts use the same daylight/sleep shading and red
 wake/sleep lines, with a simpler base R appearance. Equal wake and sleep times
