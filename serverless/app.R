@@ -35,7 +35,7 @@ daylight_minutes <- function(rise, set, wake, bed) {
 time_input <- function(id, label, value) {
   # Native type="time" may display AM/PM according to the browser locale.
   # Shiny's text binding preserves the explicit 24-hour HH:MM display.
-  textInput(id, paste0(label, " (HH:MM, 24 h)"), value = value,
+  textInput(id, label, value = value,
             placeholder = "HH:MM")
 }
 
